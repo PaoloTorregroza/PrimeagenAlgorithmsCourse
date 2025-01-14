@@ -1,15 +1,18 @@
 package algorithms
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Search algorithms
 func Search() {
 	fmt.Println("ARRAY SEARCH ALGORITHMS")
 
-	testArr := []int{2, 3, 1424, 12321, 222, 31, 69, 420}
+	testArr := []int{2, 3, 69, 420, 469, 1424, 12321}
+	fmt.Println("Searching for 420 in testArr:", BinarySearch(testArr, 420))
+	fmt.Println("Searcing for 12312 in testArr:", BinarySearch(testArr, 12321))
+	fmt.Println("Searching for 42 in testArr:", BinarySearch(testArr, 42))
 
-	fmt.Println("Searching for 420 in testArr:", LinearSearch(testArr, 420))
-	fmt.Println("Searcing for 12312 in testArr:", LinearSearch(testArr, 12312))
 }
 
 func LinearSearch(haystack []int, needle int) bool {
@@ -23,5 +26,25 @@ func LinearSearch(haystack []int, needle int) bool {
 }
 
 func BinarySearch(haystack []int, needle int) bool {
+	l := 0
+	h := len(haystack)
+
+	for {
+		m := l + (h-l)/2
+		v := haystack[m]
+
+		if needle == v {
+			return true
+		} else if v > needle {
+			h = m
+		} else if v < needle {
+			l = m + 1
+		}
+
+		if l > h || l == h {
+			break
+		}
+	}
+
 	return false
 }
