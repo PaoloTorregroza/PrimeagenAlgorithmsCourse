@@ -1,6 +1,7 @@
 package algorithms
 
 import (
+	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -24,4 +25,16 @@ func TestBinarySearch(t *testing.T) {
 	assert.False(t, BinarySearch(foo, 69421))
 	assert.True(t, BinarySearch(foo, 1))
 	assert.False(t, BinarySearch(foo, 0))
+}
+
+func TestTwoCrystalBalls(t *testing.T) {
+	idx := rand.Intn(10001)
+	data := make([]bool, 10000)
+
+	for i := idx; i < 10000; i++ {
+		data[i] = true
+	}
+
+	assert.Equal(t, TwoCrystalBalls(data), idx)
+	assert.Equal(t, TwoCrystalBalls(make([]bool, 821)), -1)
 }

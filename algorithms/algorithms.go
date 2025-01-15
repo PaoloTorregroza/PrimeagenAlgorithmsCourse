@@ -2,6 +2,7 @@ package algorithms
 
 import (
 	"fmt"
+	"math"
 )
 
 // Search algorithms
@@ -47,4 +48,28 @@ func BinarySearch(haystack []int, needle int) bool {
 	}
 
 	return false
+}
+
+func TwoCrystalBalls(breaks []bool) int {
+	jmpAmount := int(math.Floor(math.Sqrt(float64(len(breaks)))))
+
+	i := jmpAmount
+	for ; i < len(breaks); i += jmpAmount {
+		if breaks[i] {
+			break
+		}
+	}
+
+	i -= jmpAmount
+
+	for j := 0; j <= jmpAmount && i < len(breaks); {
+		if breaks[i] {
+			return i
+		}
+
+		i++
+		j++
+	}
+
+	return -1
 }
