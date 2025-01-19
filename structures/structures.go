@@ -39,3 +39,86 @@ func Array() {
 	// How do we delete something?
 	// Replacing the bits at an specific position with 0
 }
+
+// LINKED LISTS
+
+// This can be known as a node based data structure, each node refers to the next one, in that way, data is
+// organized in a non continuous way on memory, that means that adding and removing elements on this data structure
+// is easier that in an array, but since memory is not continous it is going to take more time to read.
+type Node[T any] struct {
+	val  T
+	next *Node[T]
+	prev *Node[T]
+}
+
+type LinkedList[T any] struct {
+	head *Node[T]
+	tail *Node[T]
+}
+
+func (ll *LinkedList[T]) Add(val T) *Node[T] {
+	l := ll.tail
+	n := Node[T]{val: val, prev: l}
+
+	if l != nil {
+		l.next = &n
+	}
+
+	ll.tail = &n
+
+	if ll.head == nil {
+		ll.head = &n
+	}
+
+	return &n
+}
+
+func (ll *LinkedList[T]) Remove(node *Node[T]) {
+	p := node.prev
+	n := node.next
+
+	p.next = n
+	n.prev = p
+	node.prev = nil
+	node.next = nil
+}
+
+func (ll *LinkedList[T]) InsertAfter(node *Node[T], val T) *Node[T] {
+	if node.next == nil {
+		return ll.Add(val)
+	}
+
+	n := Node[T]{val: val, prev: node, next: node.next}
+	node.next.prev = &n
+	node.next = &n
+
+	return &n
+}
+
+func (ll *LinkedList[T]) PrintAll() {
+	current := ll.head
+	for {
+		if current == nil {
+			break
+		}
+
+		fmt.Println(current)
+		current = current.next
+	}
+}
+
+func LinkedListShowcase() {
+	myLl := LinkedList[int]{}
+
+	nN := myLl.Add(23)
+
+	myLl.Add(123)
+	myLl.Add(69)
+	toRemove := myLl.Add(123123123)
+	myLl.InsertAfter(nN, 420)
+	myLl.Add(1)
+
+	myLl.Remove(toRemove)
+
+	myLl.PrintAll()
+}

@@ -7,6 +7,7 @@ import (
 
 func main() {
 	structures.Array()
+	structures.LinkedListShowcase()
 
 	algorithms.Search()
 }
