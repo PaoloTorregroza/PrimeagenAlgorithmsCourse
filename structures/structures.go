@@ -122,3 +122,59 @@ func LinkedListShowcase() {
 
 	myLl.PrintAll()
 }
+
+// QUEUES
+
+type QNode[T any] struct {
+	value T
+	next  *QNode[T]
+}
+
+type Queue[T any] struct {
+	length int
+	head   *QNode[T]
+	tail   *QNode[T]
+}
+
+func (q *Queue[T]) Enqueue(item T) {
+	q.length++
+
+	n := QNode[T]{value: item}
+
+	if q.length-1 == 0 {
+		q.head = &n
+		q.tail = &n
+	} else {
+		q.tail.next = &n
+		q.tail = &n
+	}
+}
+
+func (q *Queue[T]) Dequeue() T {
+	if q.head == nil {
+		var r T
+		return r
+	}
+
+	q.length--
+
+	h := q.head
+	q.head = q.head.next
+
+	// Non garbage collector languages should do a cleanup of h in here
+	h.next = nil
+	return h.value
+}
+
+func (q *Queue[T]) Peek() T {
+	if q.head == nil {
+		var r T
+		return r
+	}
+
+	return q.head.value
+}
+
+func QueuesShowCase() {
+
+}
